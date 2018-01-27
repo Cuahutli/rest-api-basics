@@ -4,10 +4,12 @@ from rest_framework import generics, mixins
 from postings.models import BlogPost
 
 from .serializers import BlogPostSerializer
+from .permissions import IsOwnerOrReadOnly
 
 class BlogPostAPIView(mixins.CreateModelMixin, generics.ListAPIView):
-    lookup_field    = 'pk' #slug, id
-    serializer_class     =  BlogPostSerializer
+    lookup_field        = 'pk' #slug, id
+    serializer_class    = BlogPostSerializer
+    #permission_classes  = []
     #queryset        = BlogPost.objects.all()
 
     def get_queryset(self):
@@ -28,8 +30,9 @@ class BlogPostAPIView(mixins.CreateModelMixin, generics.ListAPIView):
 
 
 class BlogPostRUDView(generics.RetrieveUpdateDestroyAPIView):
-    lookup_field    = 'pk' #slug, id
-    serializer_class     =  BlogPostSerializer
+    lookup_field        = 'pk' #slug, id
+    serializer_class    =  BlogPostSerializer
+    permission_classes  = [IsOwnerOrReadOnly,]
     #queryset        = BlogPost.objects.all()
 
     def get_queryset(self):
