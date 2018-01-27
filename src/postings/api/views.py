@@ -5,7 +5,7 @@ from postings.models import BlogPost
 
 from .serializers import BlogPostSerializer
 
-class BlogPostAPIView(generics.CreateAPIView):
+class BlogPostAPIView(generics.ListAPIView):
     lookup_field    = 'pk' #slug, id
     serializer_class     =  BlogPostSerializer
     #queryset        = BlogPost.objects.all()
@@ -15,8 +15,8 @@ class BlogPostAPIView(generics.CreateAPIView):
         # qs = qs.exclude(pk=2)
         return BlogPost.objects.all()
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+    # def perform_create(self, serializer):
+    #     serializer.save(user=self.request.user)
 
 class BlogPostRUDView(generics.RetrieveUpdateDestroyAPIView):
     lookup_field    = 'pk' #slug, id
